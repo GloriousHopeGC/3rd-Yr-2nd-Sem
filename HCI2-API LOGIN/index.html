@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <form action="">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="Email">
+                <i class='bx bxs-user'></i>
+            </div>
+            <p id="result"></p>
+            <div class="input-box">
+                <input type="password" placeholder="password">
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="remember-forgot ">
+                <label><input type="checkbox" placeholder="checkbox">Remember me</label>
+                <a href="#">Forgot password</a>
+            </div>
+            <button type="button" onclick="checkEmail()" class="btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        function checkEmail() {
+          let email = document.getElementById("email").value;
+          const options = {
+            method: "GET",
+            headers: {
+              'X-RapidAPI-Key': '9b9f9b8cf4msh0c3c6ee0f646b1ep1c99e9jsn7069fcd07777',
+              'X-RapidAPI-Host': 'validect-email-verification-v1.p.rapidapi.com'
+            },
+          };
+        
+          fetch(`https://validect-email-verification-v1.p.rapidapi.com/v1/verify?email=${email}`, options)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data); // Log the response for debugging
+              if (data.status === "valid") {
+                // Redirect to another page if email is valid
+                window.location.href = "home.html";
+              } else {
+                document.getElementById("result").innerHTML = "Invalid email";
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              document.getElementById("result").innerHTML = "Error occurred";
+            });
+        }
+        </script>
+</body>
+</html>
