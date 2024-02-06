@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="icon" href="assets/human.png">
+  <title>Feedback Form</title>
+</head>
+<body>
+    <section></section><!--For Background Image  -->
+    <div class="container">
+        <form>
+            <h1>Give your feedback</h1>
+             <div class="id">
+                <input type="text" id="fullname" placeholder="Fullname" required>
+                <i class="bi bi-person"></i>
+            </div>
+            <div class="id">
+                <input type="email" id="email" placeholder="Email"/>
+                <i class="bi bi-envelope"></i>
+            </div>
+            <textarea cols="15" rows="5" placeholder="Enter your feedback" required></textarea>
+            <p id="result"></p>
+            <div class="id">
+                <button type="button" onclick="checkEmail()" style="width: 200px; height: 50px; font-size: 20px; background-color: #00fff0;     color: #222;
+                padding: 10px 37%;
+                width: 100%;
+                font-size: 20px;
+                font-weight: 800;
+                cursor: pointer;
+                border-radius: 3px;
+                text-decoration: none;">Submit</button>
+            </div>
+        </form>
+        <script>
+          function checkEmail() {
+            let email = document.getElementById("email").value;
+            const options = {
+              method: "GET",
+              headers: {
+                'X-RapidAPI-Key': '9b9f9b8cf4msh0c3c6ee0f646b1ep1c99e9jsn7069fcd07777',
+                'X-RapidAPI-Host': 'validect-email-verification-v1.p.rapidapi.com'
+              },
+            };
+          
+            fetch(`https://validect-email-verification-v1.p.rapidapi.com/v1/verify?email=${email}`, options)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data); // Log the response for debugging
+                if (data.status === "valid") {
+                  // Redirect to another page if email is valid
+                  window.location.href = "contact.html";
+                } else {
+                  document.getElementById("result").innerHTML = "Invalid email";
+                }
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById("result").innerHTML = "Error occurred";
+              });
+          }
+          </script>
+          
+</body>
+</html>
